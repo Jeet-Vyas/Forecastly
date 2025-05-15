@@ -3,7 +3,7 @@ import React from 'react'
 const Navbar = () => {
   return (
     <>
-      <nav class="bg-gray-900 sticky top-0">
+      <nav className="bg-gray-900 sticky top-0 z-1">
         <div className="h-14 w-full px-4 flex justify-between items-center">
 
           <div className='text-white flex gap-2 items-center'>
@@ -21,7 +21,7 @@ const Navbar = () => {
 
           <div className='flex gap-10'>
             <input type='text' placeholder='Search City' className='bg-gray-600 rounded-sm text-white py-1 px-2'></input>
-            <image className='bg-white w-8 h-8 rounded-[50%]'></image>
+            <img className='bg-white w-8 h-8 rounded-[50%]'></img>
           </div>
 
 
