@@ -1,7 +1,6 @@
 const axios = require('axios');
 
 const OPENWEATHER_API_KEY = process.env.OPENWEATHERMAP_API_KEY;
-const TOMORROW_API_KEY = process.env.TOMORROWIO_API_KEY;
 
 function getCloudDescription(cover) {
     if (cover < 10) return '☀️ Clear';
@@ -43,52 +42,39 @@ exports.getWeatherByCity = async(req, res) => {
             visibility: data.visibility,
             lon: data.coord.lon,
             lat: data.coord.lat,
+            timestamp: data.dt,
+            timezone: data.timezone,
         }
 
-        let forecastResponse;
         try{
-            forecastResponse = await axios.get(`https://api.tomorrow.io/v4/weather/forecast`, {
+            forecastResponse = await axios.get(`https://pro.openweathermap.org/data/2.5/forecast`, {
                 params: {
-                    location: `${currentWeather.lat},${currentWeather.lon}`,
-                    apikey: TOMORROW_API_KEY,
-                    timesteps: '1h,1d',
+                    q: cityName,
+                    appid: OPENWEATHER_API_KEY,
                     units: 'metric',
                 }
             });
 
-            const forecastData = forecastResponse.data.timelines;
+            const forecastData = forecastResponse.data;
 
-            const hourlyForecast = forecastData.hourly.slice(0, 48).map(hour => ({
-                time: hour.time,
-                temperature: hour.values.temperature,
-                humidity: hour.values.humidity,
-                windSpeed: hour.values.windSpeed,
-                weatherCode: hour.values.weatherCode,
-                visibility: hour.values.visibility,
-                uvIndex: hour.values.uvIndex,
-                cloudCover: hour.values.cloudCover,
-                cloudDescription: getCloudDescription(hour.values.cloudCover)
+            const hourlyForecast = forecastData.list.slice(0, 16).map(hour => ({
+                time: hour.dt_txt,
+                temperature: hour.main.temp,
+                icon: `http://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png`,
+                description: hour.weather[0].description
             }));
         
-            const dailyForecast = forecastData.daily.slice(0, 5).map(day => ({
-                date: day.time,
-                temperatureMax: day.values.temperatureApparentMax,
-                temperatureMin: day.values.temperatureApparentMin,
-                humidityAvg: day.values.humidityAvg,
-                sunrise: day.values.sunriseTime,
-                sunset: day.values.sunsetTime,
-                weatherCode: day.values.weatherCode,
-                visibility: day.values.visibilityAvg,
-                uvIndex: day.values.uvIndexMax,
-                cloudCover: day.values.cloudCoverAvg,
-                cloudDescription: getCloudDescription(day.values.cloudCover)
+            const dailyForecast = forecastData.list.filter(item =>
+                item.dt_txt.includes('12:00:00')
+              ).slice(0, 5).map(day => ({
+                date: day.dt_txt.split(' ')[0],
+                minTemp: day.main.temp_min,
+                maxTemp: day.main.temp_max,
+                icon: `http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`,
+                description: day.weather[0].description
             }));
 
             res.json({
-                location: {
-                    city: currentWeather.city,
-                    country: currentWeather.country,
-                },
                 current: currentWeather,
                 hourly: hourlyForecast,
                 daily: dailyForecast,
