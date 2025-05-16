@@ -1,7 +1,7 @@
 import React from 'react'
 import CurrentWeather from './components/CurrentWeather'
-import HourlyWeather from './components/HourlyWeather'
-import DailyWeather from './components/DailyWeather'
+import HourlyForecast from './components/HourlyForecast'
+import DailyForecast from './components/DailyForecast'
 
 const LandingPage = () => {
   return (
@@ -11,10 +11,10 @@ const LandingPage = () => {
                 <CurrentWeather />
             </div>
             <div className="h-40 border-1 rounded-md p-1">
-              <HourlyWeather />
+              <HourlyForecast />
             </div>
-            <div className="h-100 border-1 rounded-md p-1">
-              <DailyWeather />
+            <div className="h-full border-1 rounded-md p-1">
+              <DailyForecast />
             </div>
         </div>
     </>
