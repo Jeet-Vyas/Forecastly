@@ -18,23 +18,59 @@ import uvLightImage from '../../../assets/uvLight.png';
 import coordinatesLightImage from '../../../assets/locationLight.png'; 
 import cloudImage from '../../../assets/cloudy.png';
 
-const CurrentWeather = () => {
+function unixToLocal(timestamp, timezone) {
+    const totalMilliseconds = (timestamp + timezone) * 1000;
+    const date = new Date(totalMilliseconds);
+  
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December'];
+  
+    const dayName = weekdays[date.getUTCDay()];
+    const monthName = months[date.getUTCMonth()];
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+  
+    const hour = date.getUTCHours().toString().padStart(2, '0');
+    const minute = date.getUTCMinutes().toString().padStart(2, '0');
+  
+    return `${dayName}, ${monthName} ${day}, ${year} | ${hour}:${minute}`;
+}
+
+function formatTimeAMPM(timestamp, timezone) {
+    const totalMilliseconds = (timestamp + timezone) * 1000;
+    const date = new Date(totalMilliseconds);
+  
+    // Extract hours and minutes using UTC methods
+    let hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+  
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+  
+    return `${hours}:${minutes} ${ampm}`;
+}
+
+const visibilityKm = (visibility) => {
+    return (visibility / 1000).toFixed(1);
+}
+
+const CurrentWeather = ({data}) => {
   return (
     <>
         <div className='h-full flex text-white bg-[#1A1B3F]'>
             <div className='flex flex-row px-8 w-6/10 py-10'>
                 <div className='w-[50%] py-3 flex flex-col items-center'>
-                    <p className='text-2xl'> Ahmedabad, <span> IN </span></p>
-                    <p className='text-sm'>Wednesday, May 14, 2025 | 18:30</p>
-                    <div className='h-50 w-50 rounded-[50%] mt-8'>
-                        <img src={cloudImage} alt="Cloud Icon"></img>
+                    <p className='text-2xl'> {data.city}, <span> {data.country} </span></p>
+                    <p className='text-sm'> {unixToLocal(data.timestamp, data.timezone)} </p>
+                    <div className='h-50 w-50 rounded-[50%] mt-8 flex justify-center items-center'>
+                        <img src={data.icon} alt="Cloud Icon" className='h-30 w-30'></img>
                     </div>
                 </div>
                 <div className='w-[50%] py-3 flex flex-col items-center justify-center gap-15'>
                     <div className='flex flex-col gap-2 items-center'>
-                        <p className='text-6xl'> 38°C </p>
-                        <p> ☀️ Clear sky </p>
-                        <p> Feels Like 42°C </p>
+                        <p className='text-6xl'> {data.temperature}°C </p>
+                        <p> {data.description} </p>
+                        <p> Feels like: {data.feels_like}°C </p>
                     </div>
                 </div>
             </div>
@@ -47,7 +83,7 @@ const CurrentWeather = () => {
                                     <img src={sunriseLightImage} alt="Sunrise Icon" className="w-6 h-6" />
                                     <span className="text-sm font-medium">Sunrise</span>
                                 </div>
-                                <div className="text-xl font-semibold">06:34 AM</div>
+                                <div className="text-xl font-semibold">{formatTimeAMPM(data.sunrise, data.timezone)}</div>
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
@@ -56,7 +92,7 @@ const CurrentWeather = () => {
                                     <img src={sunsetLightImage} alt="Sunset Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Sunset</span>
                                 </div>
-                                <div className="text-xl font-semibold">07:47 AM</div>
+                                <div className="text-xl font-semibold">{formatTimeAMPM(data.sunset, data.timezone)}</div>
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
@@ -65,7 +101,7 @@ const CurrentWeather = () => {
                                     <img src={humidityLightImage} alt="Humidity Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Humidity</span>
                                 </div>
-                                <div className="text-xl font-semibold">65%</div>
+                                <div className="text-xl font-semibold">{data.humidity}%</div>
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
@@ -74,7 +110,7 @@ const CurrentWeather = () => {
                                     <img src={windLightImage} alt="Wind Icon" className="w-7 h-7" />
                                     <span className="text-sm font-medium">Wind Speed</span>
                                 </div>
-                                <div className="text-xl font-semibold">18 km/h</div>
+                                <div className="text-xl font-semibold">{data.windSpeed} km/h</div>
                             </div>
                         </li>
                     </ul>
@@ -87,7 +123,7 @@ const CurrentWeather = () => {
                                     <img src={pressureLightImage} alt="Pressure Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Pressure</span>
                                 </div>
-                                <div className="text-xl font-semibold">1012 hPa</div>
+                                <div className="text-xl font-semibold">{data.pressure} hPa</div>
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
@@ -105,7 +141,7 @@ const CurrentWeather = () => {
                                     <img src={visibilityLightImage} alt="Visibility Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Visibility</span>
                                 </div>
-                                <div className="text-xl font-semibold">10 km</div>
+                                <div className="text-xl font-semibold">{visibilityKm(data.visibility)} km</div>
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
@@ -114,7 +150,9 @@ const CurrentWeather = () => {
                                     <img src={coordinatesLightImage} alt="Coordinates Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Coordinates</span>
                                 </div>
-                                <div className="text-md font-semibold">23.0225°N, 72.5714°E</div>
+                                <div className='flex justify-center text-center'>
+                                    <div className="text-md font-semibold">{data.lon}°N, {data.lat}°E</div>      
+                                </div>
                             </div>
                         </li>
                     </ul>

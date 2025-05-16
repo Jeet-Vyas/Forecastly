@@ -1,6 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { useState } from 'react';
+import { useCity } from '../context/CityContext';
 
 const Navbar = () => {
+  const { setCity } = useCity();
+  const [input, setInput] = useState('');
+
+  const handleInputChange = (e) => {
+    if(e.key === 'Enter' && input.trim() !== ''){
+      setCity(input.trim());
+      console.log(input);
+    }
+  };
+
   return (
     <>
       <nav className="bg-gray-900 sticky top-0 z-1">
@@ -20,7 +32,10 @@ const Navbar = () => {
           </div>
 
           <div className='flex gap-10'>
-            <input type='text' placeholder='Search City' className='bg-gray-600 rounded-sm text-white py-1 px-2'></input>
+            <input type='text' value={input} placeholder='Search City' 
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleInputChange} 
+                  className='bg-gray-600 rounded-sm text-white py-1 px-2'></input>
             <img className='bg-white w-8 h-8 rounded-[50%]'></img>
           </div>
 
