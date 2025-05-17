@@ -1,22 +1,30 @@
 import React from 'react';
 
-function getDayLabel(forecastDateStr) {
-  const forecastDate = new Date(forecastDateStr);
-  const today = new Date();
+function formatForecastLabel(datetimeString) {
+  const date = new Date(datetimeString);
+  const now = new Date();
 
-  const forecastMid = new Date(forecastDate.getFullYear(), forecastDate.getMonth(), forecastDate.getDate());
-  const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const forecastDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  const diffInTime = forecastMid - todayMid;
-  const diffInDays = diffInTime / (1000 * 60 * 60 * 24);
+  const msInDay = 1000 * 60 * 60 * 24;
+  const diffInDays = (forecastDate - todayDate) / msInDay;
 
-  if (diffInDays === 0) return "Today";
-  if (diffInDays === 1) return "Tomorrow";
+  let dayLabel;
+  if (diffInDays === 0) {
+    dayLabel = 'Today';
+  } else if (diffInDays === 1) {
+    dayLabel = 'Tomorrow';
+  } else {
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    dayLabel = weekdays[date.getDay()];
+  }
 
-  const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  return weekdays[forecastDate.getDay()];
+  const hour = date.getHours().toString().padStart(2, '0');
+  const minute = date.getMinutes().toString().padStart(2, '0');
+
+  return `${dayLabel} ${hour}:${minute}`;
 }
-
 
 const HourlyForecast = ({data}) => {
   return (
@@ -27,7 +35,7 @@ const HourlyForecast = ({data}) => {
             <ul className='h-full flex'>
               {data.slice(0, 16).map((item, index) => (
                 <li key={index} className="px-5 flex flex-col text-center justify-around items-center">
-                  <p>{getDayLabel(item.time)}</p>
+                  <p>{formatForecastLabel(item.time)}</p>
                   <img src={item.icon} alt="weather icon" className="size-15" />
                   <p>{item.temperature}°C</p>
                 </li>

@@ -4,6 +4,7 @@ import {useCity} from '../../context/CityContext';
 import CurrentWeather from './components/CurrentWeather';
 import HourlyForecast from './components/HourlyForecast';
 import DailyForecast from './components/DailyForecast';
+import clearSkyVideo from '../../assets/clear_sky.mp4';
 
 import { useState, useEffect } from 'react'
 
@@ -25,22 +26,33 @@ const LandingPage = () => {
 
   return (
     <>
-        <div className='bg-[#D1CFE2] p-5 flex flex-col gap-5'>
-            <div className="w-full h-96 border-1 rounded-md"> 
+        <div className='relative w-full min-h-screen overflow-hidden'>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute top-0 left-0 w-full h-full object-cover -z-10">
+            <source src={clearSkyVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+           <div className="relative z-1 p-5 flex flex-col gap-5 min-h-screen">
+            <div className="w-full h-96"> 
               {weatherData?.current && (
                 <CurrentWeather data={weatherData.current} />
               )}
             </div>
-            <div className="h-60 border-1 rounded-md p-1">
+            <div className="h-60">
               {weatherData?.hourly && ( 
                 <HourlyForecast data={weatherData.hourly} />
               )}
             </div>
-            <div className="h-full border-1 rounded-md p-1">
+            <div>
               {weatherData?.daily && ( 
                 <DailyForecast data={weatherData.daily} />
               )}
             </div>
+          </div>
         </div>
     </>
   )

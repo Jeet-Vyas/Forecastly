@@ -57,7 +57,8 @@ const visibilityKm = (visibility) => {
 const CurrentWeather = ({data}) => {
   return (
     <>
-        <div className='h-full flex text-white bg-[#1A1B3F]'>
+        {/* <div className='h-full flex text-white bg-[#1A1B3F]'> */}
+        <div className='h-full flex text-white'>
             <div className='flex flex-row px-8 w-6/10 py-10'>
                 <div className='w-[50%] py-3 flex flex-col items-center'>
                     <p className='text-2xl'> {data.city}, <span> {data.country} </span></p>
