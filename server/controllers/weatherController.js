@@ -35,7 +35,7 @@ exports.getWeatherByCity = async(req, res) => {
             humidity: data.main.humidity,
             windSpeed: data.wind.speed,
             description: data.weather[0].description,
-            icon: `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
+            icon: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
             pressure: data.main.pressure,
             sunrise: data.sys.sunrise,
             sunset: data.sys.sunset,
