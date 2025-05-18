@@ -18,6 +18,8 @@ import uvLightImage from '../../../assets/uvLight.png';
 import coordinatesLightImage from '../../../assets/locationLight.png'; 
 import cloudImage from '../../../assets/cloudy.png';
 
+import sunImage from '../../../assets/sun.svg';
+
 function unixToLocal(timestamp, timezone) {
     const totalMilliseconds = (timestamp + timezone) * 1000;
     const date = new Date(totalMilliseconds);
@@ -61,17 +63,17 @@ const CurrentWeather = ({data}) => {
         <div className='h-full flex text-white'>
             <div className='flex flex-row px-8 w-6/10 py-10'>
                 <div className='w-[50%] py-3 flex flex-col items-center'>
-                    <p className='text-2xl'> {data.city}, <span> {data.country} </span></p>
-                    <p className='text-sm'> {unixToLocal(data.timestamp, data.timezone)} </p>
+                    <p className='text-4xl'> {data.city}, <span> {data.country} </span></p>
+                    <p className='text-md'> {unixToLocal(data.timestamp, data.timezone)} </p>
                     <div className='h-50 w-50 rounded-[50%] mt-8 flex justify-center items-center'>
-                        <img src={data.icon} alt="Cloud Icon" className='h-30 w-30'></img>
+                        <img src={data.icon} alt="Cloud Icon" className='size-50'></img>
                     </div>
                 </div>
                 <div className='w-[50%] py-3 flex flex-col items-center justify-center gap-15'>
                     <div className='flex flex-col gap-2 items-center'>
-                        <p className='text-6xl'> {data.temperature}°C </p>
+                        <p className='text-6xl'> {parseInt(data.temperature)}°C </p>
                         <p> {data.description} </p>
-                        <p> Feels like: {data.feels_like}°C </p>
+                        <p> Feels like: {parseInt(data.feels_like)}°C </p>
                     </div>
                 </div>
             </div>
@@ -79,7 +81,7 @@ const CurrentWeather = ({data}) => {
                 <div className='px-10'>
                     <ul className='flex items-center justify-around h-full gap-5'>
                         <li className='flex flex-col items-center'>
-                            <div  className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-sm border border-white/5 shadow-md text-white flex flex-col items-center justify-center hover:scale-105 transition-transform duration-700">
+                            <div  className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col items-center justify-center hover:scale-105 transition-transform duration-700">
                                 <div className="flex items-center space-x-2 mb-1">
                                     <img src={sunriseLightImage} alt="Sunrise Icon" className="w-6 h-6" />
                                     <span className="text-sm font-medium">Sunrise</span>
@@ -88,7 +90,7 @@ const CurrentWeather = ({data}) => {
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
-                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-sm border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
+                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">
                                     <img src={sunsetLightImage} alt="Sunset Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Sunset</span>
@@ -97,7 +99,7 @@ const CurrentWeather = ({data}) => {
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
-                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-sm border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
+                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">
                                     <img src={humidityLightImage} alt="Humidity Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Humidity</span>
@@ -106,7 +108,7 @@ const CurrentWeather = ({data}) => {
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
-                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-sm border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
+                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">
                                     <img src={windLightImage} alt="Wind Icon" className="w-7 h-7" />
                                     <span className="text-sm font-medium">Wind Speed</span>
@@ -119,7 +121,7 @@ const CurrentWeather = ({data}) => {
                 <div className='px-10 w-2/10'>
                     <ul className='flex items-center justify-around h-full gap-5'>
                         <li className='flex flex-col items-center'>
-                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-sm border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
+                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">
                                     <img src={pressureLightImage} alt="Pressure Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Pressure</span>
@@ -128,7 +130,7 @@ const CurrentWeather = ({data}) => {
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
-                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-sm border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
+                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">
                                     <img src={uvLightImage} alt="UV Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">UV Index</span>
@@ -137,7 +139,7 @@ const CurrentWeather = ({data}) => {
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
-                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-sm border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
+                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">
                                     <img src={visibilityLightImage} alt="Visibility Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Visibility</span>
@@ -146,7 +148,7 @@ const CurrentWeather = ({data}) => {
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
-                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-sm border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
+                            <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">
                                     <img src={coordinatesLightImage} alt="Coordinates Icon" className="w-5 h-5" />
                                     <span className="text-sm font-medium">Coordinates</span>

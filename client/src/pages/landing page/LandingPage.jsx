@@ -6,11 +6,19 @@ import HourlyForecast from './components/HourlyForecast';
 import DailyForecast from './components/DailyForecast';
 import clearSkyVideo from '../../assets/clear_sky.mp4';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const LandingPage = () => {
   const { city } = useCity();
   const [weatherData, setWeatherData] = useState();
+
+   const videoRef = useRef();
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5; // 0.5 = half speed
+    }
+  }, []);
 
   useEffect(() => {
     if(!city) return;
@@ -28,6 +36,7 @@ const LandingPage = () => {
     <>
         <div className='relative w-full min-h-screen overflow-hidden'>
           <video
+            ref={videoRef}
             autoPlay
             loop
             muted

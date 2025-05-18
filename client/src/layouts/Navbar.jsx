@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-gray-900 sticky top-0 z-20">
-        <div className="h-14 w-full px-4 flex justify-between items-center">
+        <div className="h-16 w-full px-4 flex justify-between items-center">
 
           <div className='text-white flex gap-2 items-center'>
             <div className='bg-white h-8 w-8'></div>
@@ -35,7 +35,7 @@ const Navbar = () => {
             <input type='text' value={input} placeholder='Search City' 
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleInputChange} 
-                  className='bg-gray-600 rounded-sm text-white py-1 px-2'></input>
+                  className='bg-gray-600 rounded-sm text-white py-1 px-2 lg:w-[300px] w-[200px]'></input>
             <img className='bg-white w-8 h-8 rounded-[50%]'></img>
           </div>
 
