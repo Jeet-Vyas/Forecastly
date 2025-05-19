@@ -16,7 +16,10 @@ npm run dev
 cd server
 npm install
 
-take .env folder from mail
+Create a .env file inside /server:
+
+touch .env
+paste the conent (API Key) from doc provided in mail 
 
 ✅ 4. You're Ready!
 
