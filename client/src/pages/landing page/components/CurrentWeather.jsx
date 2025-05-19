@@ -18,7 +18,7 @@ import uvLightImage from '../../../assets/uvLight.png';
 import coordinatesLightImage from '../../../assets/locationLight.png'; 
 import cloudImage from '../../../assets/cloudy.png';
 
-import sunImage from '../../../assets/sun.svg';
+import sunImage from '../../../assets/sun.png';
 
 function unixToLocal(timestamp, timezone) {
     const totalMilliseconds = (timestamp + timezone) * 1000;
@@ -59,27 +59,26 @@ const visibilityKm = (visibility) => {
 const CurrentWeather = ({data}) => {
   return (
     <>
-        {/* <div className='h-full flex text-white bg-[#1A1B3F]'> */}
-        <div className='h-full flex text-white'>
-            <div className='flex flex-row px-8 w-6/10 py-10'>
-                <div className='w-[50%] py-3 flex flex-col items-center'>
-                    <p className='text-4xl'> {data.city}, <span> {data.country} </span></p>
-                    <p className='text-md'> {unixToLocal(data.timestamp, data.timezone)} </p>
-                    <div className='h-50 w-50 rounded-[50%] mt-8 flex justify-center items-center'>
-                        <img src={data.icon} alt="Cloud Icon" className='size-50'></img>
+        <div className='md:flex text-white'>
+            <div className='md:flex md:flex-row md:px-8 md:w-6/10 md:py-10'>
+                <div className='w-full md:w-[50%] md:py-3 flex flex-col items-center'>
+                    <p className='text-md md:text-3xl'> {data.city}, <span> {data.country} </span></p>
+                    <p className='text-xs md:text-md'> {unixToLocal(data.timestamp, data.timezone)} </p>
+                    <div className='h-30 md:h-50 md:w-50 md:mt-8 flex justify-center items-center'>
+                        <img src={data.icon} alt="Cloud Icon" className='size-30 md:size-50'></img>
                     </div>
                 </div>
-                <div className='w-[50%] py-3 flex flex-col items-center justify-center gap-15'>
-                    <div className='flex flex-col gap-2 items-center'>
-                        <p className='text-6xl'> {parseInt(data.temperature)}°C </p>
+                <div className='w-full md:w-[50%] md:py-3 flex flex-col items-center justify-center md:gap-15'>
+                    <div className='flex flex-col md:gap-2 items-center'>
+                        <p className='text-4xl md:text-6xl'> {parseInt(data.temperature)}°C </p>
                         <p> {data.description} </p>
                         <p> Feels like: {parseInt(data.feels_like)}°C </p>
                     </div>
                 </div>
             </div>
-            <div className='flex flex-col justify-evenly pr-3'>
-                <div className='px-10'>
-                    <ul className='flex items-center justify-around h-full gap-5'>
+            <div className='flex flex-row sm:flex-col justify-evenly md:pr-3'>
+                <div className='md:px-10 py-5'>
+                   <ul className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-10 lg:grid-cols-4 lg:gap-20">
                         <li className='flex flex-col items-center'>
                             <div  className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col items-center justify-center hover:scale-105 transition-transform duration-700">
                                 <div className="flex items-center space-x-2 mb-1">
@@ -116,10 +115,6 @@ const CurrentWeather = ({data}) => {
                                 <div className="text-xl font-semibold">{data.windSpeed} km/h</div>
                             </div>
                         </li>
-                    </ul>
-                </div>
-                <div className='px-10 w-2/10'>
-                    <ul className='flex items-center justify-around h-full gap-5'>
                         <li className='flex flex-col items-center'>
                             <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">

@@ -4,9 +4,17 @@ import {useCity} from '../../context/CityContext';
 import CurrentWeather from './components/CurrentWeather';
 import HourlyForecast from './components/HourlyForecast';
 import DailyForecast from './components/DailyForecast';
-import clearSkyVideo from '../../assets/clear_sky.mp4';
+import SunPath from './components/SunPath';
 
-import { useState, useEffect, useRef } from 'react'
+import clearSkyVideo from '../../assets/clear_sky.mp4';
+import cloudVideo from '../../assets/cloud.mp4';
+import sunnyDayVideo from '../../assets/sunnyday.mp4';
+import rainyVideo from '../../assets/rainy.mp4';
+import nightVideo from '../../assets/night.mp4';
+import dayVideo from '../../assets/day.MOV';
+// import dayVideo from '../../assets/day.mp4';
+
+import { useState, useEffect, useRef } from 'react';
 
 const LandingPage = () => {
   const { city } = useCity();
@@ -42,24 +50,31 @@ const LandingPage = () => {
             muted
             playsInline
             className="absolute top-0 left-0 w-full h-full object-cover -z-10">
-            <source src={clearSkyVideo} type="video/mp4" />
+            <source src={nightVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
            <div className="relative z-1 p-5 flex flex-col gap-5 min-h-screen">
-            <div className="w-full h-96"> 
+            <div className="w-full"> 
               {weatherData?.current && (
                 <CurrentWeather data={weatherData.current} />
               )}
             </div>
-            <div className="h-60">
+            <div>
               {weatherData?.hourly && ( 
                 <HourlyForecast data={weatherData.hourly} />
               )}
             </div>
-            <div>
-              {weatherData?.daily && ( 
-                <DailyForecast data={weatherData.daily} />
-              )}
+            <div className='md:flex'>
+              <div className='md:w-[70%]'>
+                {weatherData?.daily && ( 
+                  <DailyForecast data={weatherData.daily} />
+                )}
+              </div>
+              <div className='mt-5 md:mt-0 md:w-[30%]'>
+                {weatherData?.current && (
+                  <SunPath data={weatherData.current} />
+                )}
+              </div>
             </div>
           </div>
         </div>
