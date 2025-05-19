@@ -7,11 +7,11 @@ import DailyForecast from './components/DailyForecast';
 import SunPath from './components/SunPath';
 
 import clearSkyVideo from '../../assets/clear_sky.mp4';
-import cloudVideo from '../../assets/cloud.mp4';
-import sunnyDayVideo from '../../assets/sunnyday.mp4';
-import rainyVideo from '../../assets/rainy.mp4';
+// import cloudVideo from '../../assets/cloud.mp4';
+// import sunnyDayVideo from '../../assets/sunnyday.mp4';
+// import rainyVideo from '../../assets/rainy.mp4';
 import nightVideo from '../../assets/night.mp4';
-import dayVideo from '../../assets/day.MOV';
+// import dayVideo from '../../assets/day.MOV';
 // import dayVideo from '../../assets/day.mp4';
 
 import { useState, useEffect, useRef } from 'react';
@@ -50,7 +50,7 @@ const LandingPage = () => {
             muted
             playsInline
             className="absolute top-0 left-0 w-full h-full object-cover -z-10">
-            <source src={nightVideo} type="video/mp4" />
+            <source src={clearSkyVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
            <div className="relative z-1 p-5 flex flex-col gap-5 min-h-screen">
