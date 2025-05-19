@@ -16,6 +16,7 @@ import humidityLightImage from '../../../assets/humidityLight.png';
 import visibilityLightImage from '../../../assets/eyeLight.svg';
 import uvLightImage from '../../../assets/uvLight.png';
 import coordinatesLightImage from '../../../assets/locationLight.png'; 
+import windDegImage from '../../../assets/windDeg.svg';
 import cloudImage from '../../../assets/cloudy.png';
 
 import sunImage from '../../../assets/sun.png';
@@ -127,10 +128,10 @@ const CurrentWeather = ({data}) => {
                         <li className='flex flex-col items-center'>
                             <div className="w-36 h-28 rounded-xl bg-white/20 backdrop-blur-xl border border-white/5 shadow-md text-white flex flex-col justify-center items-center p-2">
                                 <div className="flex items-center space-x-2 mb-1">
-                                    <img src={uvLightImage} alt="UV Icon" className="w-5 h-5" />
-                                    <span className="text-sm font-medium">UV Index</span>
+                                    <img src={windDegImage} alt="UV Icon" className="w-5 h-5" />
+                                    <span className="text-sm font-medium">Wind Direction</span>
                                 </div>
-                                <div className="text-xl font-semibold">7 (High)</div>
+                                <div className="text-xl font-semibold">{data.windDeg}</div>
                             </div>
                         </li>
                         <li className='flex flex-col items-center'>
