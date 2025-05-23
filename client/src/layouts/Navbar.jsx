@@ -9,7 +9,7 @@ const Navbar = () => {
   const handleInputChange = (e) => {
     if(e.key === 'Enter' && input.trim() !== ''){
       setCity(input.trim());
-      console.log(input);
+      setInput('');
     }
   };
 

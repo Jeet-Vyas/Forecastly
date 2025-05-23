@@ -6,22 +6,26 @@ import HourlyForecast from './components/HourlyForecast';
 import DailyForecast from './components/DailyForecast';
 import SunPath from './components/SunPath';
 
-import clearSkyVideo from '../../assets/clear_sky.mp4';
-// import cloudVideo from '../../assets/cloud.mp4';
-// import sunnyDayVideo from '../../assets/sunnyday.mp4';
-// import rainyVideo from '../../assets/rainy.mp4';
-import nightVideo from '../../assets/nightt.mp4';
-// import dayVideo from '../../assets/day.MOV';
-// import dayVideo from '../../assets/day.mp4';
+import bgnight from '../../assets/bgnight.mp4'
+import bgday from '../../assets/bgday.mp4';
 
 import { useState, useEffect, useRef } from 'react';
 
 const LandingPage = () => {
   const { city } = useCity();
   const [weatherData, setWeatherData] = useState();
+  const [isNight, setIsNight] = useState(false);
 
-   const videoRef = useRef();
+  const videoRef = useRef();
 
+  function isNightTime(timestamp, timezone) {
+    const totalMilliseconds = (timestamp + timezone) * 1000;
+    const date = new Date(totalMilliseconds);
+  
+    const hours = date.getUTCHours(); // still use UTC hours because you already adjusted for timezone
+    return hours < 6 || hours >= 18; // before 6AM or after 6PM = night
+  }
+  
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.5; // 0.5 = half speed
@@ -33,8 +37,9 @@ const LandingPage = () => {
 
     const fetchWeatherData = async() => {
       const weatherResponse = await axios.get(`http://localhost:5000/api/forecast?city=${city}`);
+      const data = weatherResponse.data.current;
       setWeatherData(weatherResponse.data);
-      console.log(weatherData)
+      setIsNight(isNightTime(data.timestamp, data.timezone));
     }
 
     fetchWeatherData();
@@ -42,7 +47,7 @@ const LandingPage = () => {
 
   return (
     <>
-        <div className='relative w-full min-h-screen overflow-hidden'>
+        <div className='relative w-full min-h-screen overflow-hidden '>
           <video
             ref={videoRef}
             autoPlay
@@ -50,7 +55,7 @@ const LandingPage = () => {
             muted
             playsInline
             className="absolute top-0 left-0 w-full h-full object-cover -z-10">
-            <source src={nightVideo} type="video/mp4" />
+            <source src={isNight ? bgnight : bgday} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
            <div className="relative z-1 p-5 flex flex-col gap-5 min-h-screen">
