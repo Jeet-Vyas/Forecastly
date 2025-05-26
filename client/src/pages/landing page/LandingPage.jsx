@@ -15,6 +15,7 @@ const LandingPage = () => {
   const { city } = useCity();
   const [weatherData, setWeatherData] = useState();
   const [isNight, setIsNight] = useState(false);
+  const [error, setError] = useState(null);
 
   const videoRef = useRef();
 
@@ -36,14 +37,29 @@ const LandingPage = () => {
     if(!city) return;
 
     const fetchWeatherData = async() => {
-      const weatherResponse = await axios.get(`http://localhost:5000/api/forecast?city=${city}`);
-      const data = weatherResponse.data.current;
-      setWeatherData(weatherResponse.data);
-      setIsNight(isNightTime(data.timestamp, data.timezone));
+      try{
+        const weatherResponse = await axios.get(`http://192.168.1.63:5000/api/forecast?city=${city}`);
+        console.log('weather response:', weatherResponse.data); 
+        const data = weatherResponse.data.current;
+        setWeatherData(weatherResponse.data);
+        setIsNight(isNightTime(data.timestamp, data.timezone));
+        setError(null);
+      }
+      catch (err) {
+        setError("City not found. Please enter a valid city.");
+        // setWeatherData(null);
+      }
     }
 
     fetchWeatherData();
   }, [city])
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+      setError(null);
+    }
+  }, [error]);  
 
   return (
     <>
