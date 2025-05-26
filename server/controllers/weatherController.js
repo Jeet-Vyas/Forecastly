@@ -2,14 +2,6 @@ const axios = require('axios');
 
 const OPENWEATHER_API_KEY = process.env.OPENWEATHERMAP_API_KEY;
 
-function getCloudDescription(cover) {
-    if (cover < 10) return '☀️ Clear';
-    if (cover < 30) return '🌤 Mostly Clear';
-    if (cover < 60) return '⛅ Partly Cloudy';
-    if (cover < 90) return '🌥 Mostly Cloudy';
-    return '☁️ Overcast';
-}
-
 exports.getWeatherByCity = async(req, res) => {
     const cityName = req.query.city;
 
