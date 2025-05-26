@@ -22,8 +22,8 @@ const LandingPage = () => {
     const totalMilliseconds = (timestamp + timezone) * 1000;
     const date = new Date(totalMilliseconds);
   
-    const hours = date.getUTCHours(); // still use UTC hours because you already adjusted for timezone
-    return hours < 6 || hours >= 18; // before 6AM or after 6PM = night
+    const hours = date.getUTCHours();
+    return hours < 6 || hours >= 18;
   }
   
   useEffect(() => {
@@ -49,6 +49,7 @@ const LandingPage = () => {
     <>
         <div className='relative w-full min-h-screen overflow-hidden '>
           <video
+            key={isNight}
             ref={videoRef}
             autoPlay
             loop
