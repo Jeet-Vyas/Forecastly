@@ -9,6 +9,8 @@ import SunPath from './components/SunPath';
 import bgnight from '../../assets/bgnight.mp4'
 import bgday from '../../assets/bgday.mp4';
 
+const ip = process.env.IP || 'localhost';
+
 import { useState, useEffect, useRef } from 'react';
 
 const LandingPage = () => {
@@ -38,7 +40,7 @@ const LandingPage = () => {
 
     const fetchWeatherData = async() => {
       try{
-        const weatherResponse = await axios.get(`http://192.168.1.63:5000/api/forecast?city=${city}`);
+        const weatherResponse = await axios.get(`http://${ip}:5000/api/forecast?city=${city}`);
         console.log('weather response:', weatherResponse.data); 
         const data = weatherResponse.data.current;
         setWeatherData(weatherResponse.data);
