@@ -9,7 +9,8 @@ import SunPath from './components/SunPath';
 import bgnight from '../../assets/bgnight.mp4'
 import bgday from '../../assets/bgday.mp4';
 
-const ip = process.env.IP || 'localhost';
+const ip = import.meta.env.VITE_IP || 'localhost';
+const port = import.meta.env.VITE_PORT || 5000;
 
 import { useState, useEffect, useRef } from 'react';
 
@@ -40,7 +41,7 @@ const LandingPage = () => {
 
     const fetchWeatherData = async() => {
       try{
-        const weatherResponse = await axios.get(`http://${ip}:5000/api/forecast?city=${city}`);
+        const weatherResponse = await axios.get(`http://${ip}:${port}/api/forecast?city=${city}`);
         console.log('weather response:', weatherResponse.data); 
         const data = weatherResponse.data.current;
         setWeatherData(weatherResponse.data);
@@ -48,8 +49,9 @@ const LandingPage = () => {
         setError(null);
       }
       catch (err) {
+        console.error('Fetch error:', err);
         setError("City not found. Please enter a valid city.");
-        // setWeatherData(null);
+        // setWeatherData(null); // comment this out as it clear the older weather data when the city is not found
       }
     }
 

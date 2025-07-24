@@ -1,8 +1,10 @@
-const axios = require('axios');
+import dotenv from 'dotenv';
+dotenv.config();
+import axios from 'axios';
 
 const OPENWEATHER_API_KEY = process.env.OPENWEATHERMAP_API_KEY;
 
-exports.getWeatherByCity = async(req, res) => {
+export const getWeatherByCity = async(req, res) => {
     const cityName = req.query.city;
 
     if (!cityName) {
@@ -39,6 +41,7 @@ exports.getWeatherByCity = async(req, res) => {
             timezone: data.timezone,
         }
 
+        let forecastResponse;
         try{
             forecastResponse = await axios.get(`https://pro.openweathermap.org/data/2.5/forecast`, {
                 params: {
@@ -74,16 +77,17 @@ exports.getWeatherByCity = async(req, res) => {
             });
         } 
         catch (e) {
+            console.error('Forecast fetch error:', e.message);
             return res.status(502).json({ error: 'Forecast service failed. Please try again later.' });
         }
 
     }
     catch(e){
+        console.error('Weather fetch error:', e.message);
         if (e.response && e.response.status === 404) {
             return res.status(404).json({ error: 'City not found' });
         }
       
-        console.error('Weather fetch error:', e.message);
         return res.status(500).json({ error: 'Server error while fetching weather data.' });
     }
 }

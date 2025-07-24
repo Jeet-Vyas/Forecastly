@@ -1,12 +1,13 @@
-require('dotenv').config();
-const express = require('express');
+import dotenv from 'dotenv';
+dotenv.config();
+import express from 'express';
+import cors from 'cors';
 const app = express()
 const PORT = process.env.PORT || 5000;
 const ip = process.env.IP || 'localhost';
-const cors = require('cors');
 
 // routes
-const weatherRoutes = require('./routes/weather.js');
+import weatherRoutes from './routes/weather.js';
 
 app.use(cors());
 app.use(weatherRoutes);
